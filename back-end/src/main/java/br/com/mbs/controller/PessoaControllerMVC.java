@@ -57,4 +57,25 @@ public class PessoaControllerMVC {
 	   }
    }
    
+   // 
+   
+   @GetMapping("/iniciar-deletar-pessoa-por-id")
+   public String iniciarDeletarPessoaPorID(Model model) {
+      return "deletar-pessoa-por-id";
+   }
+   
+   @PostMapping("/deletar-pessoa-por-id")
+   public String deletarPessoaPorID(@RequestParam("id") String id,
+		   									Model model) {
+       
+	  Boolean foiRemovido = listaPessoa
+			  .removeIf(pessoa -> pessoa.getId().equals(id));
+	   
+	   if(foiRemovido) {
+		   model.addAttribute("listaPessoa", listaPessoa);
+		   return "listar-pessoa";
+	   }else {	   
+		   return "mostra-pessoa-nao-encontrada";
+	   }
+   }
 }
