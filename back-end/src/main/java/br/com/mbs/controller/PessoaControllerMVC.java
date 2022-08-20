@@ -78,4 +78,25 @@ public class PessoaControllerMVC {
 		   return "mostra-pessoa-nao-encontrada";
 	   }
    }
+   
+   @PostMapping("/atualizar-pessoa-por-id")
+   public String atualizarPessoaPorID(@RequestParam("id") String id,
+		   						@RequestParam("idade") String idade,
+		   									Model model) {
+	   Integer idadeInteira = Integer.parseInt(idade);
+	   
+	   if(idadeInteira < 0 || idadeInteira > 130) {
+		   // error
+		   //redicionamento pra pagina de error
+	   }
+	   else {
+		  // sucesso
+		  // buscar a pessoa pelo id
+		   // atualizar esta pessao encontada a sua idade
+		   // redicionamento pra pagina de sucesso
+		   
+	   }
+	   return null;
+	   
+   }
 }
