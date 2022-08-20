@@ -13,4 +13,8 @@ public class ProdutoRepositorio {
 		System.out.println("produto salvo com sucesso");
 	}
 	
+	public ArrayList<ProdutoModelo> listar(){
+		return lista;
+	}
+	
 }

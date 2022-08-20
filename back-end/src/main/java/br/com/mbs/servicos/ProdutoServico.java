@@ -1,5 +1,7 @@
 package br.com.mbs.servicos;
 
+import java.util.ArrayList;
+
 import br.com.mbs.dados.ProdutoRepositorio;
 import br.com.mbs.modelos.ProdutoModelo;
 
@@ -23,6 +25,10 @@ public class ProdutoServico {
 			System.out.println("error ao salvar o produto");
 			return false;
 		}
+	}
+	
+	public ArrayList<ProdutoModelo> listagem(){
+		return repositorio.listar();
 	}
 	
 }
