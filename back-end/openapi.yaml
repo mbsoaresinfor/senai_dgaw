@@ -1,0 +1,99 @@
+openapi: 3.0.3
+info:
+  title: Pessoa Controler API
+  description: Isto é a descricao da controller Pessoa API
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: mbsoares.infor@gmail.com
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+tags:
+  - name: crud pessoa
+    description: Crud de Pessoa
+paths:
+  /pessoa:
+    post:
+      tags:
+        - crud pessoa
+      summary: Cadastro de pessoa
+      description: Cadastramento de Pessoa
+      operationId: salvarPessoa
+      requestBody:
+        description: Entidade/Modelo/Schema Pessoa
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pessoa'
+        required: true
+      responses:
+        '400':
+          description: Successful operation
+    put:
+      summary: Atualização de Pessoa
+      description: Atualiza uma pessoa
+      operationId: atualizarPessoa
+      requestBody:
+        description: Entidade/Modelo/Schema Pessoa
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pessoa'
+        required: true
+      responses:
+        '400':
+          description: Successful operation
+      tags:
+        - crud pessoa
+  /pessoa/{id}:
+    delete:
+      summary: Deletar uma Pessoa
+      description: Remoção de uma Pessoa
+      operationId: removerPessoa
+      parameters:
+        - name: id
+          in: path
+          description: 'Id da Pessoa'
+          required: true
+          schema:
+            type: string
+      responses:
+        default:
+          description: Default error sample response
+      tags:
+        - crud pessoa
+    get:
+      summary: Busca uma Pessoa
+      description: Busca de uma Pessoa
+      operationId: buscarPessoa
+      parameters:
+        - name: id
+          in: path
+          description: 'Id da Pessoa'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Retorno da Pessoa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pessoa'
+      tags:
+        - crud pessoa
+  
+components:
+  schemas:
+    Pessoa:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 5
+        nome:
+          type: string
+          example: pedro
+    
