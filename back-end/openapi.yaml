@@ -96,4 +96,7 @@ components:
         nome:
           type: string
           example: pedro
+        endereco:
+          type: string
+          example: teste
     
