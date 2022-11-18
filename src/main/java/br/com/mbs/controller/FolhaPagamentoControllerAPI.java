@@ -61,13 +61,14 @@ public class FolhaPagamentoControllerAPI {
 			method = RequestMethod.GET)	 
 	public ResponseEntity<List<Float>> buscarSalariosPessoa(){		 
 		 
-		List<Float> listaSalario = mapaPessoa
-								  .values()
-								  .stream()
-								  .map(pessoa -> pessoa.getSalario())
-								  .toList();
+//		List<Float> listaSalario = mapaPessoa
+//								  .values()
+//								  .stream()
+//								  .map(pessoa -> pessoa.getSalario())
+//								  .toList();
 		
-		return ResponseEntity.ok(listaSalario);
+		//return ResponseEntity.ok(listaSalario);
+		return null;
 	}
 	
 	@RequestMapping(value = "/folha-pagamento/pessoa/salario/", 
