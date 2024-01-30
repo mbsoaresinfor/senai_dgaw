@@ -1,0 +1,7 @@
+Para executar o Broker (RabbitMQ) deve ter instalado na máquina o Docker.
+Para windows: (https://docs.docker.com/desktop/install/windows-install/)
+Para linux: executar apt-get
+
+Após executar comando abaixo:
+
+sudo docker run -d --hostname my-rabbit  -p 8080:15672 -p 5672:5672 -p 25676:25676 rabbitmq:3-management
