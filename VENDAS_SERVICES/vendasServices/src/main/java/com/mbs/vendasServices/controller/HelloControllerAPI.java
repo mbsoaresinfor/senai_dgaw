@@ -12,6 +12,6 @@ public class HelloControllerAPI {
 	@RequestMapping(value = "/hello-api", method = RequestMethod.GET)	 
 	public ResponseEntity<String> helloApi() throws Exception {		 
 		System.out.println("Processando hello-api");
-		 return ResponseEntity.ok("Hello Api");
+		 return ResponseEntity.ok("Hello API");
 	}
 }
