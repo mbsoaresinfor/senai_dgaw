@@ -14,7 +14,8 @@ public class HelloControllerMVC {
 
    @GetMapping("/hello")
 	public String greeting(@RequestParam(name="name", required=false, defaultValue="MVC") String name, Model model) {
-		model.addAttribute("name", name);
+		System.out.println("o valor da variavel name é: " + name);
+	   model.addAttribute("name", name);
 		return "hello";
 	}
    
