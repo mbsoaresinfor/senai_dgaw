@@ -8,6 +8,8 @@ public class VendasServicesApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(VendasServicesApplication.class, args);
+		
+		// alterado
 	}
 
 }
