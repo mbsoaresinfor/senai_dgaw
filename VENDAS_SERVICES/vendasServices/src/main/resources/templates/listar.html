@@ -1,0 +1,29 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Getting Started: Handling Form Submission</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Listagem das Vendas</h1>
+	<table border=1>
+	<tr>
+		<th>Código do Cliente: </th>
+		<th>Nome do Produto:</th>
+		<th>Quantidade: </th>
+		<th>Preço: </th>
+		<th>Total da Venda </th>
+	</tr>
+	<tr th:each="venda: ${lista_venda}">
+	    <td th:text="${venda.codCliente}" /> 
+	    <td th:text="${venda.nomeProduto}" /> 
+	    <td th:text="${venda.quantidade}" /> 
+	    <td th:text="${venda.preco}" />    
+	    <td th:text="${venda.totalVenda}" />    
+	</tr>
+	</table>
+    
+    
+    <a href="/inicio_cadastrar">Cadastrar novo produto</a>
+</body>
+</html>

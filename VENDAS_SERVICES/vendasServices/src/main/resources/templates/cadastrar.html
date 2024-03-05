@@ -7,9 +7,14 @@
 <body>
 	<h1>Cadastro de Vendas</h1>
     <form action="#" th:action="@{/cadastrar}" th:object="${venda}" method="post">
+    	<p>Cód. Cliente: <input type="text" th:field="*{codCliente}" /></p>
     	<p>Nome Produto: <input type="text" th:field="*{nomeProduto}" /></p>        
+    	<p>Quantidade: <input type="text" th:field="*{quantidade}" /></p>
+    	<p>Preço: <input type="text" th:field="*{preco}" /></p>
         <p><input type="submit" value="Submit" />
         <input type="reset" value="Reset" /></p>
     </form>
+    </br>
+    <a href="/listar">Listagem de Produtos</a>
 </body>
 </html>

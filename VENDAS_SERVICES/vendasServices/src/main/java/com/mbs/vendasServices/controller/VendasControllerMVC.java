@@ -30,4 +30,10 @@ public class VendasControllerMVC {
 		mapaVendas.put(id++, venda);
 		return "resultado";
 	}
+	
+	@GetMapping("/listar")
+	public String listarVendas( Model model) {
+		model.addAttribute("lista_venda", mapaVendas.values());
+		return "listar";
+	}
 }

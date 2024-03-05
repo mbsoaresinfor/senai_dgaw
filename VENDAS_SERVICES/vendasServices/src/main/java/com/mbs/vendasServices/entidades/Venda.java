@@ -7,9 +7,15 @@ public class Venda {
 	private String nomeProduto;
 	private Integer quantidade;
 	private Double preco;
+	private Double totalVenda;
 	
-	
-	
+	public Double getTotalVenda() {
+		totalVenda = quantidade * preco;
+		return totalVenda;
+	}
+	public void setTotalVenda(Double totalVenda) {
+		this.totalVenda = totalVenda;
+	}
 	public Integer getQuantidade() {
 		return quantidade;
 	}
