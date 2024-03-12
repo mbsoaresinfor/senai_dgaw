@@ -1,7 +1,9 @@
 package com.mbs.vendasServices.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -36,4 +38,19 @@ public class VendasControllerMVC {
 		model.addAttribute("lista_venda", mapaVendas.values());
 		return "listar";
 	}
+	
+	@GetMapping("/total_vendas")
+	public String totalVendas( Model model) {
+		List<Venda> lista = 
+				new ArrayList<>(mapaVendas.values());
+		Double totalVenda = 0d;
+		for(Venda item: lista) {
+			totalVenda= totalVenda 
+					+ item.getTotalVenda();
+		}		
+		model.addAttribute("totalVenda", 
+				totalVenda);
+		return "total_vendas";
+	}
+	
 }
