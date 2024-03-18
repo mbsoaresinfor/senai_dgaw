@@ -1,8 +1,10 @@
 package com.mbs.vendasServices.servico;
 
+
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.mbs.vendasServices.entidades.Venda;
 import com.mbs.vendasServices.repositorio.VendasRepositorio;
 
@@ -21,5 +23,18 @@ public class VendasServico {
 		}
 		System.out.println("Servico: salvar venda");
 		vendasRepositorio.salvar(venda);
+	}
+	
+	public ArrayList<Venda> listarVendas(){
+		return vendasRepositorio.listar();
+	}
+	
+	public Double totalVendas() {
+		Double totalVenda = 0d;
+		for(Venda item: vendasRepositorio.listar()) {
+			totalVenda= totalVenda 
+					+ item.getTotalVenda();
+		}
+		return totalVenda;
 	}
 }

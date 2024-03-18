@@ -1,11 +1,6 @@
 package com.mbs.vendasServices.controller;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,9 +14,6 @@ import com.mbs.vendasServices.servico.VendasServico;
 @Controller
 public class VendasControllerMVC {
 
-	// estamos migrando para arquitetura 3 camadas.
-	// por isso que está quebrado
-	// sera ajustado na proxima aula.
 	@Autowired
 	private VendasServico vendasService;
 	
@@ -34,28 +26,21 @@ public class VendasControllerMVC {
 	
 	@PostMapping(path="/cadastrar")
 	public String salvarVenda(@ModelAttribute Venda venda,Model model) {		
-		System.out.println("processando venda de id " + id);
+		System.out.println("processando salvarVenda " + venda);
 		vendasService.salvarVendas(venda);
 		return "resultado";
 	}
 	
 	@GetMapping("/listar")
 	public String listarVendas( Model model) {
-		model.addAttribute("lista_venda", mapaVendas.values());
+		System.out.println("processando listarVendas " );
+		model.addAttribute("lista_venda", vendasService.listarVendas());
 		return "listar";
 	}
 	
 	@GetMapping("/total_vendas")
-	public String totalVendas( Model model) {
-		List<Venda> lista = 
-				new ArrayList<>(mapaVendas.values());
-		Double totalVenda = 0d;
-		for(Venda item: lista) {
-			totalVenda= totalVenda 
-					+ item.getTotalVenda();
-		}		
-		model.addAttribute("totalVenda", 
-				totalVenda);
+	public String totalVendas( Model model) {			
+		model.addAttribute("totalVenda",vendasService.totalVendas());
 		return "total_vendas";
 	}
 	
