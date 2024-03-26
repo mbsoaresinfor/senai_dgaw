@@ -1,0 +1,7 @@
+{
+  "codCliente":1,
+  "nomeProduto":"tv",
+  "quantidade": 1,
+  "preco": 10,
+  "totalVenda": 10
+}
