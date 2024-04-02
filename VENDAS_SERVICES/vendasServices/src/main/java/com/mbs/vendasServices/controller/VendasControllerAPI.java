@@ -31,7 +31,7 @@ public class VendasControllerAPI {
 		return ResponseEntity.ok().build();
 	}
 	
-	@RequestMapping(value = "/v1/vendas", method = RequestMethod.GET)
+	@RequestMapping(value = "/v1/vendas/", method = RequestMethod.GET)
 	public ResponseEntity<List<Venda>> listarVendas() {
 		System.out.println("processando listarVendas " );		
 		return ResponseEntity.ok(vendasService.listarVendas());

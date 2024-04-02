@@ -1,0 +1,4 @@
+{
+  "nome":"pedro",
+  "endereco": "av. assis brasil, 8500"
+}
