@@ -17,12 +17,21 @@ public class ClienteRepositorio {
 	
 	public Long salvar(Cliente cliente) {
 		Long id = new Random().nextLong();
+		cliente.setId(id);
 		mapa.put(id, cliente);
 		return id;
 	}
 
 	public Cliente buscar(Long id) {
 		return mapa.get(id);
+	}
+
+	public Cliente remover(Long id) {
+		return mapa.remove(id);
+	}
+
+	public void atualizar(Cliente cliente) {
+		mapa.replace(cliente.getId(), cliente);
 	}
 	
 	

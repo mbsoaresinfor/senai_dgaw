@@ -2,7 +2,6 @@ package com.mbs.clienteServices.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -37,13 +36,27 @@ public class ClienteControllerAPI {
 					.status(HttpStatus.NO_CONTENT).build();
 		}
 	}
-	
-	public boolean remover(Integer id) {
-		
-		return true;
+	@RequestMapping(value = "/v1/cliente/{id}",method = RequestMethod.DELETE)
+	public ResponseEntity<Boolean> remover(@PathVariable Long id) {		
+		System.out.println("executando remover pelo id " + id);
+		Cliente cliente = clienteServico.buscar(id);
+		if(cliente == null) {
+			return ResponseEntity
+					.status(HttpStatus.NOT_FOUND).build();
+		}
+		boolean resultado = clienteServico.remover(id);
+		return ResponseEntity.ok(resultado);
 	}
 	
-	public boolean atualizar(Cliente cliente) {
-		return true;
+	@RequestMapping(value = "/v1/cliente",method = RequestMethod.PUT)
+	public ResponseEntity<Boolean> atualizar(@RequestBody Cliente cliente) {
+		System.out.println("executando atualizar pelo id " + cliente.getId());
+		Cliente clienteBuscado = clienteServico.buscar(cliente.getId());
+		if(clienteBuscado == null) {
+			return ResponseEntity
+					.status(HttpStatus.NOT_FOUND).build();
+		}
+		clienteServico.atualizar(cliente);
+		return ResponseEntity.ok(true);
 	}
 }

@@ -1,5 +1,7 @@
 package com.mbs.clienteServices.servicos;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.mbs.clienteServices.entidades.Cliente;
@@ -23,12 +25,20 @@ public class ClienteServico {
 		return clienteRepositorio.buscar(id);
 	}
 	
-	public void remover(Integer id) {
-		
+	public boolean remover(Long id) {
+		Cliente cliente =  clienteRepositorio.remover(id);
+		if(Objects.isNull(cliente)) {
+			return false;
+		}else {
+			return true;
+		}
 	}
 	
 	public void atualizar(Cliente cliente) {
-		
+		if(cliente.getNome().equals("")) {
+			throw new IllegalArgumentException("nome esta vazio");
+		}
+		clienteRepositorio.atualizar(cliente);
 	}
 	
 }
