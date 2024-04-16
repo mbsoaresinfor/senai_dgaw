@@ -55,5 +55,11 @@ public class VendasControllerAPI {
 		return ResponseEntity.ok(vendasService.totalVendas());
 	}
 	
+	@RequestMapping(value = "/v1/maior_venda", method = RequestMethod.GET)
+	public ResponseEntity<Integer>  getIdMaiorVenda() {
+		System.out.println("processando getIdMaiorVenda " );
+		return ResponseEntity.ok(vendasService.getMaiorVenda());
+	}
+	
 	
 }

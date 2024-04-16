@@ -37,4 +37,16 @@ public class VendasServico {
 		}
 		return totalVenda;
 	}
+
+	public Integer getMaiorVenda() {
+		Double maior = 0d;
+		Integer id = 0;
+		for(Venda venda: vendasRepositorio.listar()) {
+			if(maior < venda.getTotalVenda()) {
+				maior = venda.getTotalVenda();
+				id = venda.getCodCliente();
+			}
+		}
+		return id;
+	}
 }
