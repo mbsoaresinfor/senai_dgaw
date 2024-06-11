@@ -11,12 +11,12 @@ import com.mbs.clienteServices.entidades.Cliente;
 
 @Repository
 public class ClienteRepositorio {
-
+	static long ID;
 	private Map<Long,Cliente> mapa =
 			new HashMap<Long, Cliente>();
 	
 	public Long salvar(Cliente cliente) {
-		Long id = new Random().nextLong();
+		Long id = ++ID;
 		cliente.setId(id);
 		mapa.put(id, cliente);
 		return id;

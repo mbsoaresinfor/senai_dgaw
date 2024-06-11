@@ -86,4 +86,14 @@ public class ClienteControllerAPI {
 		clienteServico.atualizar(cliente);
 		return ResponseEntity.ok(true);
 	}
+	
+	@RequestMapping(value = "/v1/cliente/existe-cliente/{id}",method = RequestMethod.GET)
+	public ResponseEntity<Boolean> existeCliente(@PathVariable Long id) {
+		System.out.println("executando existe cliente  " + id);
+		Cliente clienteBuscado = clienteServico.buscar(id);
+		if(clienteBuscado == null) {
+			return ResponseEntity.ok(false);
+		}
+		return ResponseEntity.ok(true);
+	}
 }
