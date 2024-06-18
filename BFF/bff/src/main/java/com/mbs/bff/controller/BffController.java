@@ -1,5 +1,7 @@
 package com.mbs.bff.controller;
 
+import java.util.Date;
+
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mbs.bff.comunicacao.ClienteService;
 import com.mbs.bff.comunicacao.VendasService;
 import com.mbs.bff.entidades.Venda;
+import com.mbs.bff.entidades.Cliente;
 
 @RestController
 public class BffController {
@@ -31,15 +34,24 @@ public class BffController {
 	// orquestramento de serviços
 	@RequestMapping(value = "/v1/bff", method = RequestMethod.POST)	
 	public ResponseEntity<Boolean> processarVenda(@RequestBody Venda venda){
-		System.out.println("processando bff processarVenda");
+		System.out.println("-> orquestração: processando bff processarVenda");
+		System.out.println("-> orquestração: verificando cliente");
 		ResponseEntity<Boolean> respostaExisteCliente = 
 				clienteService.existeCliente(venda.getCodCliente().longValue());
 				
 		if(respostaExisteCliente.getBody().equals(false)) {
-			return ResponseEntity.ok(false);
+			System.out.println("-> orquestração: cliente não existe");
+			Cliente cliente = new Cliente();
+			cliente.setEndereco("rua xyz" );
+			cliente.setNome("cliente_criado_em_" + new Date().toString());
+			clienteService.salvar(cliente);
+			System.out.println("-> orquestração: cliente criado");
 		}
 		
 		vendasService.salvarVenda(venda);
+		System.out.println("-> orquestração: salvando a venda");
+		// enviando mensagem para o brocker.
+		rabbitTemplate.convertAndSend("",exchange,venda);
 		return ResponseEntity.ok(true);
 	}
 	

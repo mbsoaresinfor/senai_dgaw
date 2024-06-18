@@ -20,4 +20,6 @@ public class BffClienteController {
 		System.out.println("processando bff existe cliente " + id);
 		return clienteService.existeCliente(id);
 	}
+	
+	
 }
