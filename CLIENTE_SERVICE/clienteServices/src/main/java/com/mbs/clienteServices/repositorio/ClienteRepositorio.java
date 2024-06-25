@@ -1,6 +1,8 @@
 package com.mbs.clienteServices.repositorio;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -32,6 +34,10 @@ public class ClienteRepositorio {
 
 	public void atualizar(Cliente cliente) {
 		mapa.replace(cliente.getId(), cliente);
+	}
+	
+	public List<Cliente> retornaLista(){
+		return new ArrayList<>(mapa.values());
 	}
 	
 	

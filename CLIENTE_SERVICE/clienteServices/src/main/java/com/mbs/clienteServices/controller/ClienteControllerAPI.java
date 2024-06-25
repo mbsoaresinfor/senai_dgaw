@@ -1,5 +1,7 @@
 package com.mbs.clienteServices.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -7,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mbs.clienteServices.entidades.Cliente;
@@ -95,5 +98,17 @@ public class ClienteControllerAPI {
 			return ResponseEntity.ok(false);
 		}
 		return ResponseEntity.ok(true);
+	}
+	
+	@RequestMapping(value = "/v1/cliente/buscarPelonome/{nome}",method = RequestMethod.GET)
+	public ResponseEntity<List<Cliente>> buscarPeloNome(@PathVariable String nome) {
+		System.out.println("executando buscar pelo nome " + nome);
+		List<Cliente> listaCliente = clienteServico.buscarPorNome(nome);
+		if(!listaCliente.isEmpty()) {
+			return ResponseEntity.ok(listaCliente);
+		}else {
+			return ResponseEntity
+					.status(HttpStatus.NO_CONTENT).build();
+		}
 	}
 }

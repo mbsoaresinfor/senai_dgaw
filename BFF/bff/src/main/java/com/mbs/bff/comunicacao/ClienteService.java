@@ -1,5 +1,7 @@
 package com.mbs.bff.comunicacao;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,5 +21,8 @@ public ResponseEntity<Boolean> existeCliente(@PathVariable Long id);
 
 @RequestMapping(value = "/v1/cliente",method = RequestMethod.POST)
 public ResponseEntity<Long> salvar(@RequestBody Cliente cliente);
+
+@RequestMapping(value = "/v1/cliente/buscarPelonome/{nome}",method = RequestMethod.GET)
+public ResponseEntity<List<Cliente>> buscarPeloNome(@PathVariable String nome);
 
 }

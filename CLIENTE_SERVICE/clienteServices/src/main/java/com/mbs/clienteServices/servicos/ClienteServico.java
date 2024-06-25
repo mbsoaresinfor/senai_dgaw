@@ -1,6 +1,8 @@
 package com.mbs.clienteServices.servicos;
 
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +41,14 @@ public class ClienteServico {
 			throw new IllegalArgumentException("nome esta vazio");
 		}
 		clienteRepositorio.atualizar(cliente);
+	}
+	
+	public List<Cliente> buscarPorNome(String nome){
+		return  clienteRepositorio
+		.retornaLista()
+		.stream()
+		.filter(item -> item.getNome().equals(nome))
+		.collect(Collectors.toList());
 	}
 	
 }
