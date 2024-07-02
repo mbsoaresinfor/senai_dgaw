@@ -111,4 +111,12 @@ public class ClienteControllerAPI {
 					.status(HttpStatus.NO_CONTENT).build();
 		}
 	}
+	
+	@RequestMapping(value = "/v1/cliente/revisao",method = RequestMethod.GET)
+	public ResponseEntity<Void> revisao() {
+		System.out.println("executando revisao do microserviço CLIENTE" );		
+		return ResponseEntity.ok().build();		
+	}
+	
+	
 }

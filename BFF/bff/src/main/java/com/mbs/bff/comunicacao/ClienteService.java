@@ -25,4 +25,7 @@ public ResponseEntity<Long> salvar(@RequestBody Cliente cliente);
 @RequestMapping(value = "/v1/cliente/buscarPelonome/{nome}",method = RequestMethod.GET)
 public ResponseEntity<List<Cliente>> buscarPeloNome(@PathVariable String nome);
 
+@RequestMapping(value = "/v1/cliente/revisao",method = RequestMethod.GET)
+public ResponseEntity<Void> revisao();
+
 }

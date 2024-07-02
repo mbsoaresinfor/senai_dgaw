@@ -24,6 +24,28 @@ public class RabbitMQConfig {
 	@Value("${exchange}")
 	String exchange;
 	
+	@Value("${exchange_revisao}")
+	String exchange_revisao;
+	
+	@Value("${queue_revisao}")
+	String queue_revisao;
+	
+	@Bean
+	Queue queueRevisao() {
+		return new Queue(queue_revisao, true);
+	}
+	
+	@Bean
+	FanoutExchange exchangeRevisao() {
+		return new FanoutExchange(exchange_revisao);
+	}
+	
+	@Bean
+	Binding bindingExchangeFilaRevisao() {
+		return BindingBuilder.bind(queueRevisao()).
+				to(exchangeRevisao());
+	}
+	
 	@Bean
 	Queue queueProduto() {
 		return new Queue(queueProduto, true);

@@ -31,6 +31,9 @@ public class BffController {
 	@Value("${exchange}")
 	private String exchange;
 	
+	@Value("${exchange_revisao}")
+	private String exchangeRevisao;
+	
 	// orquestramento de serviços
 	@RequestMapping(value = "/v1/bff", method = RequestMethod.POST)	
 	public ResponseEntity<Boolean> processarVenda(@RequestBody Venda venda){
@@ -58,5 +61,14 @@ public class BffController {
 	@RequestMapping(value = "/v1/teste", method = RequestMethod.GET)	
 		public void teste(){
 		rabbitTemplate.convertAndSend("", exchange, "teste");
+	}
+	
+	@RequestMapping(value = "/v1/bff/revisao",method = RequestMethod.GET)
+	public ResponseEntity<Void> revisao(){
+		System.out.println("executando revisao do microserviço BFF" );
+		clienteService.revisao();
+		vendasService.revisao();
+		rabbitTemplate.convertAndSend("",exchangeRevisao,"Ola, isso é teste do exercicio de REVISAO");
+		return ResponseEntity.ok().build();	
 	}
 }

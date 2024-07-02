@@ -15,6 +15,10 @@ public interface VendasService {
 	
 	@RequestMapping(value = "/v1/vendas", method = RequestMethod.POST)	
 	public ResponseEntity<Void> salvarVenda(@RequestBody Venda venda);	
+	
+	@RequestMapping(value = "/v1/vendas/revisao",method = RequestMethod.GET)
+	public ResponseEntity<Void> revisao() ;
 		
+	
 
 }
