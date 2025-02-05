@@ -1,4 +1,4 @@
-package com.mbs.vendasServices.controller;
+package com.mbs.petmvc.controller;
 
 
 import org.springframework.stereotype.Controller;
@@ -13,7 +13,7 @@ public class HelloControllerMVC {
 
 
    @GetMapping("/hello")
-	public String greeting(@RequestParam(name="name", required=false, defaultValue="MVC") String name, Model model) {
+	public String hello(@RequestParam(name="name", required=false, defaultValue="MVC") String name, Model model) {
 		model.addAttribute("name", name);
 		return "hello";
 	}
