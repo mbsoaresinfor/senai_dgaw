@@ -1,4 +1,4 @@
-package com.mbs.vendasServices.controller;
+package com.mbs.clienteServices.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
