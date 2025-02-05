@@ -11,8 +11,8 @@
 	<groupId>com.mbs</groupId>
 	<artifactId>api_gw_services</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>api_gw_services</name>
-	<description>api gw</description>
+	<name>apiGwServices</name>
+	<description>apiGwServices</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.5</spring-cloud.version>
