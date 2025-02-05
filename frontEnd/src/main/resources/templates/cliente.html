@@ -28,11 +28,12 @@
   	<td><input type="text" id="endereco" size="50"></br></td>
 </tr>
 </table>    
-    
+        
   <button onclick="criarCliente()">Adicionar</button>
 
-  <ul id="listaTarefas">
-    </ul>
+   <h3>Listagem de Cliente</h3>
+  <div id="listaClientes"></div> 
+  
 </body>
 </html>
 
@@ -67,7 +68,35 @@ async function criarCliente() {
   document.getElementById("cpf").value = "";
   document.getElementById("endereco").value = "";
   
-  //carregarTarefas(); // Atualiza a lista de tarefas
+  carregarClientes(); // Atualiza a lista de clientes
+}
+
+//Função para carregar os clientes da API e exibir na lista
+async function carregarClientes() {
+  const response = await fetch(urlAPI);
+  const clientes = await response.json();
+
+  const listaClientes = document.getElementById("listaClientes");
+  listaClientes.innerHTML = ""; // Limpa a lista antes de adicionar as tarefas
+  
+  var linhas = "<tr><th>Nome</th><th>Email</th><th>CPF</th><th>Endereço</th> <th>Ação</th>";
+  clientes.forEach(cliente => {    
+	  linha = `
+    	<tr>
+    		<td>${cliente.nome}</td>
+    		<td>${cliente.email}</td>
+    		<td>${cliente.cpf} </td>
+    		<td>${cliente.endereco}</td>
+    		<td>
+    			<button onclick="editarTarefa(${cliente.id})">Editar</button>
+      			<button onclick="excluirTarefa(${cliente.id})">Excluir</button>
+      		</td>    
+    `;
+	  linhas = linhas + linha;
+  });
+  
+  listaClientes.innerHTML  =  '<table border=1>' + linhas + '</table>';
+  
 }
 
 // Função para editar uma tarefa existente
@@ -98,6 +127,6 @@ async function excluirTarefa(id) {
   }
 }
 
-// Carrega as tarefas ao carregar a página
-//carregarTarefas();
+
+carregarClientes();
 </script>

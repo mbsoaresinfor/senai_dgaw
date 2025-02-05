@@ -27,4 +27,10 @@ public class ClienteControllerAPI {
 		listaCliente.add(cliente);
 		return ResponseEntity.ok(id);
 	}
+	
+	@RequestMapping(value = "/v1/cliente",method = RequestMethod.GET)
+	public ResponseEntity<List<Cliente>> listar() {
+		System.out.println("executando listar " );
+		return ResponseEntity.ok(listaCliente);
+	}
 }
