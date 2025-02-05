@@ -1,10 +1,103 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head> 
-    <title>Front End CLIENTE</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+<title>Front End CLIENTE</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
+
+<h1>FRONT-END CLIENTE</h1>
+
+<h3>Cadastro de Cliente</h3>
+
+<table>
+<tr>
+	<td> Nome: </td>
+   	<td><input type="text" id="nome" size="50" ></br></td>
+</tr>
+<tr>
+	<td>Email: </td>
+  	<td><input type="text" id="email" size="50"></br></td>
+</tr>
+<tr>
+  	<td>CPF:</td>
+   	<td><input type="text" id="cpf" size="20" ></br></td>
+</tr>
+<tr>
+  	<td>Endereço: </td>
+  	<td><input type="text" id="endereco" size="50"></br></td>
+</tr>
+</table>    
     
+  <button onclick="criarCliente()">Adicionar</button>
+
+  <ul id="listaTarefas">
+    </ul>
 </body>
 </html>
+
+
+<script type="text/javascript">
+
+const urlAPI = "http://localhost:9003/v1/cliente"; // URL da API clienteServices
+
+// Função para criar um novo cliente
+async function criarCliente() {
+  const nome = document.getElementById("nome").value;
+  const email = document.getElementById("email").value;
+  const cpf = document.getElementById("cpf").value;
+  const endereco = document.getElementById("endereco").value;
+  const body = {
+		"nome" : nome,
+		"email" : email,
+		"cpf" : cpf,
+		"endereco" : endereco
+  }
+
+  await fetch(urlAPI, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify( body )
+  });
+
+  document.getElementById("nome").value = ""; // Limpa o campo de entrada
+  document.getElementById("email").value = "";
+  document.getElementById("cpf").value = "";
+  document.getElementById("endereco").value = "";
+  
+  //carregarTarefas(); // Atualiza a lista de tarefas
+}
+
+// Função para editar uma tarefa existente
+async function editarTarefa(id) {
+  const novaDescricao = prompt("Nova descrição da tarefa:");
+
+  if (novaDescricao) {
+    await fetch(`${urlAPI}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ descricao: novaDescricao })
+    });
+
+    carregarTarefas(); // Atualiza a lista de tarefas
+  }
+}
+
+// Função para excluir uma tarefa
+async function excluirTarefa(id) {
+  if (confirm("Deseja excluir esta tarefa?")) {
+    await fetch(`${urlAPI}/${id}`, {
+      method: "DELETE"
+    });
+
+    carregarTarefas(); // Atualiza a lista de tarefas
+  }
+}
+
+// Carrega as tarefas ao carregar a página
+//carregarTarefas();
+</script>
