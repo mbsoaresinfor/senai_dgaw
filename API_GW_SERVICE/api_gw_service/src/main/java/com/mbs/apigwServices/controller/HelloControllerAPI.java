@@ -1,4 +1,4 @@
-package com.mbs.bff.controller;
+package com.mbs.apigwServices.controller;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mbs.bff.comunicacao.HelloController;
+import com.mbs.apigwServices.comunicacao.HelloController;
 
 @RestController
 public class HelloControllerAPI {
@@ -22,7 +22,7 @@ public class HelloControllerAPI {
 		@Autowired
 		private HelloController helloController;
 	
-		// exemplo de chamada de um BFF para outro servico
+		// exemplo de chamada de um Api Gw para outro servico
 		@RequestMapping(value = "/hello-api", method = RequestMethod.GET)	 
 		public ResponseEntity<String> helloApi() throws Exception {		 
 			System.out.println("Processando hello-api, chamando helloControllerAPI no micro servico de vendasSErvice");
