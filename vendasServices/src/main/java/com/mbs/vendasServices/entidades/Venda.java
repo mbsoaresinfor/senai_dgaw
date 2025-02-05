@@ -4,6 +4,7 @@ public class Venda {
 
 	private Integer codCliente;
 	private String nomeProduto;
+	private Double precoProduco;
 	
 	public Integer getCodCliente() {
 		return codCliente;
@@ -17,5 +18,12 @@ public class Venda {
 	public void setNomeProduto(String nomeProduto) {
 		this.nomeProduto = nomeProduto;
 	}
+	public Double getPrecoProduco() {
+		return precoProduco;
+	}
+	public void setPrecoProduco(Double precoProduco) {
+		this.precoProduco = precoProduco;
+	}
+	
 	
 }
