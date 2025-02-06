@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mbs</groupId>
-	<artifactId>api_gw_services</artifactId>
+	<artifactId>api_gw</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>apiGwServices</name>
-	<description>apiGwServices</description>
+	<name>apiGw</name>
+	<description>apiGw</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.5</spring-cloud.version>

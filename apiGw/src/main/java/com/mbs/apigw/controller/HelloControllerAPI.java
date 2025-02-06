@@ -1,4 +1,4 @@
-package com.mbs.apigwServices.controller;
+package com.mbs.apigw.controller;
 
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mbs.apigwServices.comunicacao.HelloController;
+import com.mbs.apigw.comunicacao.HelloController;
 
 @RestController
 public class HelloControllerAPI {

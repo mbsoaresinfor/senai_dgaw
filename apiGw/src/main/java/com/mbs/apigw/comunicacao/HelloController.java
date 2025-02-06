@@ -1,4 +1,4 @@
-package com.mbs.apigwServices.comunicacao;
+package com.mbs.apigw.comunicacao;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
