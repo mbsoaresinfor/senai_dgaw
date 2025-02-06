@@ -25,8 +25,8 @@
    	<td><input type="text" id="cpf" size="20"> <br></td>
 </tr>
 <tr>
-  	<td>Endereço: </td>
-  	<td><input type="text" id="endereco" size="50"><br></td>
+  	<td>CEP: </td>
+  	<td><input type="text" id="cep" size="50"><br></td>
 </tr>
 </table>  
         
@@ -51,14 +51,14 @@ async function criarCliente() {
 	const nome = document.getElementById("nome").value;
 	const email = document.getElementById("email").value;
   	const cpf = document.getElementById("cpf").value;
-  	const endereco = document.getElementById("endereco").value;
+  	const cep = document.getElementById("cep").value;
   
   // cria o payload para enviar a api.
 	const body = {
 		"nome" : nome,
 		"email" : email,
 		"cpf" : cpf,
-		"endereco" : endereco
+		"cep" : cep
  	}
   // realiza a chamada na api
   	await fetch(urlAPI, {
@@ -74,7 +74,7 @@ async function criarCliente() {
 			document.getElementById("nome").value = ""; // Limpa o campo de entrada
 			document.getElementById("email").value = "";
 			document.getElementById("cpf").value = "";
-			document.getElementById("endereco").value = "";
+			document.getElementById("cep").value = "";
 		}else{
 			// trata o erro no cadastro.
 			const data = response.text().then(d => {
@@ -107,7 +107,7 @@ async function carregarClientes() {
  		return;
  	}
   
- 	var linhas = "<tr><th>Nome</th><th>Email</th><th>CPF</th><th>Endereço</th> <th>Ação</th>";
+ 	var linhas = "<tr><th>Nome</th><th>Email</th><th>CPF</th><th>Cep</th> <th>Ação</th>";
   	// vai iterando cada cliente.
  	clientes.forEach(cliente => {    
 	  linha = `
@@ -115,7 +115,7 @@ async function carregarClientes() {
     		<td>${cliente.nome}</td>
     		<td>${cliente.email}</td>
     		<td>${cliente.cpf} </td>
-    		<td>${cliente.endereco}</td>
+    		<td>${cliente.cep}</td>
     		<td>
     			<button onclick="editarTarefa(${cliente.id})">Editar</button>
       			<button onclick="excluirCliente(${cliente.id},'${cliente.nome}')">Excluir</button>
