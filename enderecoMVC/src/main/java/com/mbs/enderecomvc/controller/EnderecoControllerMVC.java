@@ -14,7 +14,7 @@ import com.mbs.enderecomvc.entidades.Endereco;
 
 
 @Controller
-public class EnderecoMVC {
+public class EnderecoControllerMVC {
 
 	private List<Endereco> listaEndereco = new ArrayList<Endereco>();
 	private static int id = 0;
