@@ -6,7 +6,7 @@ public class Cliente {
 	private String nome;
 	private String email;
 	private String cpf;
-	private String endereco;
+	private Endereco endereco; // campo que vai ser usado quando ser feita a integracao junto ao enderecoMVC
 	
 	public Integer getId() {
 		return id;
@@ -32,10 +32,10 @@ public class Cliente {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
-	public String getEndereco() {
+	public Endereco getEndereco() {
 		return endereco;
 	}
-	public void setEndereco(String endereco) {
+	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
 	}
 	
