@@ -77,7 +77,10 @@ async function criarCliente() {
 			document.getElementById("endereco").value = "";
 		}else{
 			// trata o erro no cadastro.
-			alert("Erro no cadastro");
+			const data = response.text().then(d => {
+				alert("Erro no cadastro \n" + d);
+			});
+
 		}	  
  	 })
   ;

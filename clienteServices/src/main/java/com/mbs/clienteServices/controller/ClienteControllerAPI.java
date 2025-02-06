@@ -20,23 +20,23 @@ import com.mbs.clienteServices.entidades.Cliente;
 public class ClienteControllerAPI {
 
 	private List<Cliente> listaCliente = new ArrayList<Cliente>();
-	private static int id = 0;
+	private static Integer id = 0;
 	
 	
 	@RequestMapping(value = "/v1/cliente",method = RequestMethod.POST)
-	public ResponseEntity<Integer> salvar(@RequestBody Cliente cliente) {
+	public ResponseEntity<String> salvar(@RequestBody Cliente cliente) {
 		System.out.println("executando salvar " + cliente);
 		
 		// simples validacao de negocio
-		if(cliente.getNome() == null || ( cliente.getNome() != null && cliente.getNome().length() < 2)){
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST). body(0);
+		if(cliente.getNome() == null || ( cliente.getNome() != null && cliente.getNome().length() <=2 )){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST). body("Nome do cliente deve ter no minimo 3 caracteres");
 		}
 		// cria um id para o cliente
 		cliente.setId(++id);
 		// adiciona na lista
 		listaCliente.add(cliente);
 		//retorna para o cliente o status ok e o id do cliente cadastrado.
-		return ResponseEntity.ok(id);
+		return ResponseEntity.ok(id.toString());
 	}
 	
 	@RequestMapping(value = "/v1/cliente",method = RequestMethod.GET)
