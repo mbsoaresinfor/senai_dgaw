@@ -10,27 +10,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.mbs.enderecomvc.entidades.Pet;
+import com.mbs.enderecomvc.entidades.Endereco;
 
 
 @Controller
-public class PetMVC {
+public class EnderecoMVC {
 
-	private List<Pet> listaPet = new ArrayList<Pet>();
+	private List<Endereco> listaEndereco = new ArrayList<Endereco>();
 	private static int id = 0;
 	
 	@GetMapping("/inicio_cadastrar")
 	public String inicio( Model model) {
-		model.addAttribute("pet", new Pet());
+		model.addAttribute("endereco", new Endereco());
 		return "cadastrar";
 	}
 	
 	@PostMapping(path="/cadastrar")
-	public String salvar(@ModelAttribute Pet pet,Model model) {
-		pet.setCodPet(++id);
-		listaPet.add(pet); // adiciona na lista.
-		System.out.println("cadastrado pet: " + pet.getNome());
-		model.addAttribute("lista_pet",listaPet); // adiciona na request para a view pegar.
+	public String salvar(@ModelAttribute Endereco endereco,Model model) {
+		endereco.setCodigo(++id);
+		listaEndereco.add(endereco); // adiciona na lista.
+		System.out.println("cadastrado endereco: " + endereco.getRua());
+		model.addAttribute("lista_endereco",listaEndereco); // adiciona na request para a view pegar.
 		return "resultado";
 	}
 	

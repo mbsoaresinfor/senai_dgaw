@@ -1,25 +1,27 @@
 <!DOCTYPE HTML>
 <html xmlns:th="https://www.thymeleaf.org">
 <head> 
-    <title>Getting Started: Handling Form Submission</title>
+    <title>Listagem dos Enderecos Cadastrados</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	<h1>Listagem dos Pets Cadastrados</h1>
+	<h1>Listagem dos Enderecos Cadastrados</h1>
 	<table border=1>
 	<tr>
-		<th>Código do Pet: </th>
-		<th>Nome:</th>		
+		<th>Código: </th>
+		<th>Rua:</th>		
+		<th>Cidade: </th>		
 		
 	</tr>
-	<tr th:each="lista: ${lista_pet}">
-	    <td th:text="${lista.codPet}" />
-	    <td th:text="${lista.nome}" />
+	<tr th:each="lista: ${lista_endereco}">
+	    <td th:text="${lista.codigo}" />
+	    <td th:text="${lista.rua}" />
+	    <td th:text="${lista.cidade}" />
 	</tr>
 	</table>
     
         <!--  CONT. IMPLEMENTACAO -->
     
-    <a href="/inicio_cadastrar">Cadastrar novo pet</a>    
+    <a href="/inicio_cadastrar">Cadastrar novo endereco</a>    
 </body>
 </html>
