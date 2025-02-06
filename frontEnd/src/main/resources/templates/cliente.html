@@ -10,31 +10,33 @@
 
 <h3>Cadastro de Cliente</h3>
 
+
 <table>
 <tr>
 	<td> Nome: </td>
-   	<td><input type="text" id="nome" size="50" ></br></td>
+   	<td><input type="text" id="nome" size="50" ><br></td>
 </tr>
 <tr>
 	<td>Email: </td>
-  	<td><input type="text" id="email" size="50"></br></td>
+  	<td><input type="text" id="email" size="50"><br></td>
 </tr>
 <tr>
   	<td>CPF:</td>
-   	<td><input type="text" id="cpf" size="20" ></br></td>
+   	<td><input type="text" id="cpf" size="20"> <br></td>
 </tr>
 <tr>
   	<td>Endereço: </td>
-  	<td><input type="text" id="endereco" size="50"></br></td>
+  	<td><input type="text" id="endereco" size="50"><br></td>
 </tr>
-</table>    
+</table>  
         
   <button onclick="criarCliente()">Adicionar</button>
 
-   <h3>Listagem de Cliente</h3>
+   <h3>Listagem de Cliente </h3>
   <div id="listaClientes"></div> 
   
 </body>
+
 </html>
 
 
@@ -44,43 +46,67 @@ const urlAPI = "http://localhost:9003/v1/cliente"; // URL da API clienteServices
 
 // Função para criar um novo cliente
 async function criarCliente() {
-  const nome = document.getElementById("nome").value;
-  const email = document.getElementById("email").value;
-  const cpf = document.getElementById("cpf").value;
-  const endereco = document.getElementById("endereco").value;
-  const body = {
+  
+	// pega os dados da tela.
+	const nome = document.getElementById("nome").value;
+	const email = document.getElementById("email").value;
+  	const cpf = document.getElementById("cpf").value;
+  	const endereco = document.getElementById("endereco").value;
+  
+  // cria o payload para enviar a api.
+	const body = {
 		"nome" : nome,
 		"email" : email,
 		"cpf" : cpf,
 		"endereco" : endereco
-  }
-
-  await fetch(urlAPI, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify( body )
-  });
-
-  document.getElementById("nome").value = ""; // Limpa o campo de entrada
-  document.getElementById("email").value = "";
-  document.getElementById("cpf").value = "";
-  document.getElementById("endereco").value = "";
+ 	}
+  // realiza a chamada na api
+  	await fetch(urlAPI, {
+    	method: "POST",
+    	headers: {
+      	"Content-Type": "application/json"
+    	},
+    	body: JSON.stringify( body )
+  	}).then(response =>{
+		// trata o status de sucesso.		
+	  	if(response.status == 200){	  		
+			alert("sucesso no cadastro do cliente");
+			document.getElementById("nome").value = ""; // Limpa o campo de entrada
+			document.getElementById("email").value = "";
+			document.getElementById("cpf").value = "";
+			document.getElementById("endereco").value = "";
+		}else{
+			// trata o erro no cadastro.
+			alert("Erro no cadastro");
+		}	  
+ 	 })
+  ;
   
-  carregarClientes(); // Atualiza a lista de clientes
+  	carregarClientes(); // Atualiza a lista de clientes
 }
 
-//Função para carregar os clientes da API e exibir na lista
+//Função para carregar os clientes 
 async function carregarClientes() {
-  const response = await fetch(urlAPI);
-  const clientes = await response.json();
 
-  const listaClientes = document.getElementById("listaClientes");
-  listaClientes.innerHTML = ""; // Limpa a lista antes de adicionar as tarefas
+	// realiza a chamda na api
+	const response = await fetch(urlAPI);
+  	// transforma os dados da api para cliente (json-> objeto)
+	const clientes = await response.json();
+
+  	const listaClientes = document.getElementById("listaClientes");
+ 	listaClientes.innerHTML = ""; // Limpa a lista antes de adicionar as tarefas
+ 	
+ 	if(clientes == ""){
+ 		listaClientes.innerHTML = `Nenhum cliente cadastrado
+ 			<br><br>
+ 			<input type='button' onclick='carregarClientes()' value='Atualizar'/>
+ 		`;
+ 		return;
+ 	}
   
-  var linhas = "<tr><th>Nome</th><th>Email</th><th>CPF</th><th>Endereço</th> <th>Ação</th>";
-  clientes.forEach(cliente => {    
+ 	var linhas = "<tr><th>Nome</th><th>Email</th><th>CPF</th><th>Endereço</th> <th>Ação</th>";
+  	// vai iterando cada cliente.
+ 	clientes.forEach(cliente => {    
 	  linha = `
     	<tr>
     		<td>${cliente.nome}</td>
@@ -89,44 +115,29 @@ async function carregarClientes() {
     		<td>${cliente.endereco}</td>
     		<td>
     			<button onclick="editarTarefa(${cliente.id})">Editar</button>
-      			<button onclick="excluirTarefa(${cliente.id})">Excluir</button>
+      			<button onclick="excluirCliente(${cliente.id},'${cliente.nome}')">Excluir</button>
       		</td>    
-    `;
-	  linhas = linhas + linha;
-  });
+    	`;
+	  	linhas = linhas + linha;
+  	});
   
-  listaClientes.innerHTML  =  '<table border=1>' + linhas + '</table>';
-  
+  	listaClientes.innerHTML  =  '<table border=1>' + linhas + '</table><br>'  +
+  		"<input type='button' onclick='carregarClientes()' value='Atualizar'/>";  
 }
 
-// Função para editar uma tarefa existente
-async function editarTarefa(id) {
-  const novaDescricao = prompt("Nova descrição da tarefa:");
+// Função para excluir um cliente
+async function excluirCliente(id,nome) {
+ 	if (confirm("Deseja excluir o cliente " + nome + " ?")) {
+    	await fetch(`${urlAPI}/${id}`, {
+      	method: "DELETE"
+    	});
 
-  if (novaDescricao) {
-    await fetch(`${urlAPI}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ descricao: novaDescricao })
-    });
-
-    carregarTarefas(); // Atualiza a lista de tarefas
+	carregarClientes(); 
   }
 }
 
-// Função para excluir uma tarefa
-async function excluirTarefa(id) {
-  if (confirm("Deseja excluir esta tarefa?")) {
-    await fetch(`${urlAPI}/${id}`, {
-      method: "DELETE"
-    });
-
-    carregarTarefas(); // Atualiza a lista de tarefas
-  }
-}
-
+// CONTINUAR IMPLEMENTACOES
 
 carregarClientes();
+
 </script>

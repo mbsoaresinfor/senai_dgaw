@@ -8,7 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloControllerAPI {
 
-	// exemplo de api rest
+	// EXEMPLO DE UMA API REST
+	
 	@RequestMapping(value = "/hello-api", method = RequestMethod.GET)	 
 	public ResponseEntity<String> helloApi() throws Exception {		 
 		System.out.println("Processando hello-api");
