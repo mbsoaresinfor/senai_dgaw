@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.mbs</groupId>
-	<artifactId>petmvc</artifactId>
+	<artifactId>enderecomvc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>petmvc</name>
-	<description>Pet MVC</description>
+	<name>enderecomvc</name>
+	<description>Endereco MVC</description>
 	<properties>
 		<java.version>17</java.version>
 		<spring-cloud.version>2022.0.5</spring-cloud.version>

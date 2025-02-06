@@ -1,4 +1,4 @@
-package com.mbs.petmvc;
+package com.mbs.enderecomvc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

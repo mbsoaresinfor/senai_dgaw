@@ -1,4 +1,4 @@
-package com.mbs.petmvc.entidades;
+package com.mbs.enderecomvc.entidades;
 
 public class Pet {
 

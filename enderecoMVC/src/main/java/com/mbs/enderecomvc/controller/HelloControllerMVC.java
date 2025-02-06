@@ -1,4 +1,4 @@
-package com.mbs.petmvc.controller;
+package com.mbs.enderecomvc.controller;
 
 
 import org.springframework.stereotype.Controller;

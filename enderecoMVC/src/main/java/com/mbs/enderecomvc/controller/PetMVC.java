@@ -1,4 +1,4 @@
-package com.mbs.petmvc.controller;
+package com.mbs.enderecomvc.controller;
 
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.mbs.petmvc.entidades.Pet;
+import com.mbs.enderecomvc.entidades.Pet;
 
 
 @Controller
