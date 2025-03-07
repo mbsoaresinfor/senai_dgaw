@@ -21,17 +21,29 @@ public class EnderecoControllerMVC {
 	
 	@GetMapping("/inicio_cadastrar")
 	public String inicio( Model model) {
-		model.addAttribute("endereco", new Endereco());
+		model.addAttribute("endereco", 
+				new Endereco());
 		return "cadastrar";
 	}
 	
 	@PostMapping(path="/cadastrar")
-	public String salvar(@ModelAttribute Endereco endereco,Model model) {
-		endereco.setCodigo(++id);
-		listaEndereco.add(endereco); // adiciona na lista.
-		System.out.println("cadastrado endereco: " + endereco.getRua());
-		model.addAttribute("lista_endereco",listaEndereco); // adiciona na request para a view pegar.
-		return "resultado";
+	public String salvar(
+			@ModelAttribute 
+			Endereco endereco,
+			Model model) {
+		if(endereco.getRua().length() <=3 ) {
+			model.addAttribute("erro",
+					"Valor  invalido para campo rua");			
+			return "cadastrar";
+		}
+		else {
+			endereco.setCodigo(++id);
+			listaEndereco.add(endereco); // adiciona na lista.
+			System.out.println("cadastrado endereco: " + endereco.getRua());
+			model.addAttribute("lista_endereco",listaEndereco); // adiciona na request para a view pegar.
+			return "resultado";
+		}
+		
 	}
 	
 	// CONTINUAR AS IMPLEMENTACOES
