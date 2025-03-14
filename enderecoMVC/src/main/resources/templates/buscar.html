@@ -1,0 +1,21 @@
+<!DOCTYPE HTML>
+<html xmlns:th="https://www.thymeleaf.org">
+<head> 
+    <title>Buscar de Endereço MVC</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Busca de Endereco MVC</h1>
+    <form action="#" th:action="@{/buscar}" th:object="${endereco}" method="get">
+    	<p>Codigo: <input type="text" th:field="*{codigo}" /></p>
+		<p>CEP: <input type="text" th:field="*{cep}" /></p>
+        <p><input type="submit" value="Buscar" />
+        <input type="reset" value="Reset" /></p>
+    </form>
+	
+	<p th:text="${resultado}" />
+    
+    <!--  CONT. IMPLEMENTACAO -->
+     
+</body>
+</html>

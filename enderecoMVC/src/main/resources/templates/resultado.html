@@ -11,12 +11,16 @@
 		<th>Código: </th>
 		<th>Rua:</th>		
 		<th>Cidade: </th>		
+		<th>Cep: </th>
+		<th>Ação </th>
 		
 	</tr>
 	<tr th:each="lista: ${lista_endereco}">
 	    <td th:text="${lista.codigo}" />
 	    <td th:text="${lista.rua}" />
 	    <td th:text="${lista.cidade}" />
+		<td th:text="${lista.cep}" />				
+		<td> <a th:href="@{/deletar(id=${lista.codigo})}">Deletar</a></td>
 	</tr>
 	</table>
     
