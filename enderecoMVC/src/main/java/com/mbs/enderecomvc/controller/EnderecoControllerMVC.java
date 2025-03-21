@@ -12,13 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mbs.enderecomvc.entidades.Endereco;
+import com.mbs.enderecomvc.servico.EnderecoServico;
 
 
 @Controller
 public class EnderecoControllerMVC {
 
-	private List<Endereco> listaEndereco = new ArrayList<Endereco>();
-	private static int id = 0;
+	EnderecoServico enderecoServico
+	= new EnderecoServico();
+	
 	
 	@GetMapping("/inicio_cadastrar")
 	public String inicio( Model model) {
@@ -32,33 +34,27 @@ public class EnderecoControllerMVC {
 			@ModelAttribute 
 			Endereco endereco,
 			Model model) {
-		if(endereco.getRua().trim().length() <=3 ) {
-			model.addAttribute("erro",
-					"Valor  invalido para campo rua");			
-			return "cadastrar";
-		}
-		if(endereco.getCep()
-				.trim().contains("-")) {
-			model.addAttribute("erro",
-					"Cep invalido, não digite o caracter '-'");			
-			return "cadastrar";
-		}
 		
-		endereco.setCodigo(++id);
-		listaEndereco.add(endereco); // adiciona na lista.
-		System.out.println("cadastrado endereco: " + endereco.getRua());
-		model.addAttribute("lista_endereco",listaEndereco); // adiciona na request para a view pegar.
-		return "resultado";
+			String resultado = enderecoServico
+					.salvar(endereco);
+			
+			if(resultado.isEmpty()) {
+				model.addAttribute("lista_endereco",
+						enderecoServico.listar()); // adiciona na request para a view pegar.
+				return "resultado";
+			}else {
+				model.addAttribute("erro",resultado);
+				return "cadastrar";
+			}
 	}
 	
 	@GetMapping("/deletar")
 	public String deletar(@RequestParam String id,
 			Model model) {
 		System.out.println("Deletar: ID = " + id);
-		listaEndereco.removeIf((obj)-> 
-					obj.getCodigo()
-					.equals(Integer.parseInt(id)));
-		model.addAttribute("lista_endereco",listaEndereco); // adiciona na request para a view pegar.
+		enderecoServico.remover(Integer.parseInt(id));
+		model.addAttribute("lista_endereco",
+				enderecoServico.listar()); // adiciona na request para a view pegar.
 		return "resultado";
 	}
 	
