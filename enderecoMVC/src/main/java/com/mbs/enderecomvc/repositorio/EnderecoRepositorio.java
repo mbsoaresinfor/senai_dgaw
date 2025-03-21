@@ -25,4 +25,30 @@ public class EnderecoRepositorio {
 		obj.getCodigo()
 		.equals(id));
 	}
+	
+	public String buscar(Endereco endereco) {
+		StringBuilder resultado = new StringBuilder();
+		
+		for (Endereco end : listaEndereco) {
+			if(end.getCodigo()
+					.equals(endereco.getCodigo())) {
+				resultado
+				.append("cod:")
+				.append(end.getCodigo())
+				.append("rua: ")
+				.append(end.getRua())
+				.append("-----");				
+			}else if(end.getCep()
+					.equals(endereco.getCep())) {
+				resultado
+				.append("cep:")
+				.append(end.getCep())
+				.append("rua: ")
+				.append(end.getRua())
+				.append("-----");
+			}
+		}
+		return resultado.toString();
+	}
+	
 }

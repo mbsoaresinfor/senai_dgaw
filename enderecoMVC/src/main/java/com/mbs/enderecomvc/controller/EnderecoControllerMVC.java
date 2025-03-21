@@ -71,33 +71,9 @@ public class EnderecoControllerMVC {
 			Endereco endereco,
 			Model model) {
 		System.out.println("Buscar");
-		StringBuilder resultado = new StringBuilder();
 		
-		for (Endereco end : listaEndereco) {
-			if(end.getCodigo()
-					.equals(endereco.getCodigo())) {
-				resultado
-				.append("cod:")
-				.append(end.getCodigo())
-				.append("rua: ")
-				.append(end.getRua())
-				.append("-----");				
-			}else if(end.getCep()
-					.equals(endereco.getCep())) {
-				resultado
-				.append("cep:")
-				.append(end.getCep())
-				.append("rua: ")
-				.append(end.getRua())
-				.append("-----");
-			}
-		}
-		if(resultado.isEmpty()) {
-			resultado.append("NÃO FOI POSSIVEL "
-					+ "LOCALIZAR NENHUM ENDERECO");
-		}
 		model.addAttribute("resultado", 
-				resultado.toString());
+				enderecoServico.buscar(endereco));
 		return "buscar";
 	}
 	

@@ -35,7 +35,17 @@ public class EnderecoServico {
 		if(id == null) {
 			return false;
 		}
-		return enderecoRepositorio.remover(id);
+		return enderecoRepositorio.remover(id);		
+	}
+	
+	public String buscar(Endereco endereco) {
+		String resultado = enderecoRepositorio
+				.buscar(endereco);
+		if(resultado.isEmpty()) {
+			return "NÃO FOI POSSIVEL "
+					+ "LOCALIZAR NENHUM ENDERECO";
+		}
+		return resultado;
 		
 	}
 	
