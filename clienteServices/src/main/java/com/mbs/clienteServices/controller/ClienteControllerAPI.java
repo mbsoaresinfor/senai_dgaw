@@ -15,6 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.mbs.clienteServices.entidades.Cliente;
 import com.mbs.clienteServices.servico.ClienteServico;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+@Tag(name = "projeto cliente API",
+description = "Projeto de aula web do cliente API")
 @Controller
 @CrossOrigin(origins = "http://localhost:9005")
 public class ClienteControllerAPI {
@@ -22,7 +28,13 @@ public class ClienteControllerAPI {
 	@Autowired
 	private ClienteServico clienteServico ;
 	
-	
+	@Operation(summary = "salvar cliente")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", 
+					description = "salvo com sucesso"),
+			@ApiResponse(responseCode = "400",
+			description = "erro de validação do cliente")
+	})	
 	@RequestMapping(value = "/v1/cliente",method = RequestMethod.POST)
 	public ResponseEntity<String> salvar(@RequestBody Cliente cliente) {
 		System.out.println("executando salvar " + cliente);
@@ -37,6 +49,10 @@ public class ClienteControllerAPI {
 		}
 	}
 	
+	@Operation(summary = "listar clientes")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", 
+					description = "retorna uma lista de clientes")	})	
 	@RequestMapping(value = "/v1/cliente",method = RequestMethod.GET)
 	public ResponseEntity<List<Cliente>> listar() {
 		
