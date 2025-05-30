@@ -1,4 +1,4 @@
-package com.mbs.apigw.entidades;
+package com.mbs.notificacaoServices.entidades;
 
 import java.util.Date;
 
@@ -61,7 +61,6 @@ public class Venda {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 	
 	
 	
