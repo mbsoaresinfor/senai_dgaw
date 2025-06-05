@@ -1,5 +1,6 @@
 package com.mbs.apigw.controller;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.gson.Gson;
 import com.mbs.apigw.comunicacao.ClienteServiceRoteamento;
 import com.mbs.apigw.comunicacao.VendasServiceRoteamento;
 import com.mbs.apigw.entidades.Cliente;
@@ -24,6 +26,9 @@ public class VendasControllerAPI {
 	@Autowired
 	private VendasServiceRoteamento 
 			vendasServiceRoteamento;
+	
+	 @Autowired
+	  private RabbitTemplate rabbitTemplate;
 	
 	@RequestMapping(value = "/v1/processarVenda",
 			method = RequestMethod.POST)
@@ -50,11 +55,11 @@ public class VendasControllerAPI {
 					.body("Não foi possível realizar a venda");
 		}
 		
-		// TODO aqui, eu devo enviar uma mensagem para
-		// servidor de mensageria( vamos fazer nas
-		// proximas AULAS.
-		System.out.println("mockando envia de "
-				+ "mensagem para o servidor de mensageria..");
+		String vendaJson = new Gson().toJson(venda);
+		
+		rabbitTemplate.convertAndSend("vendas",
+				"routing-key-teste",
+				vendaJson);
 		
 		// retorno o id da venda realizada no body.
 		return ResponseEntity
