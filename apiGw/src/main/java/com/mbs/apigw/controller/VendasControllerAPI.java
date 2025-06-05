@@ -55,11 +55,11 @@ public class VendasControllerAPI {
 					.body("Não foi possível realizar a venda");
 		}
 		
-		String vendaJson = new Gson().toJson(venda);
+		//String vendaJson = new Gson().toJson(venda);
 		
 		rabbitTemplate.convertAndSend("vendas",
 				"routing-key-teste",
-				vendaJson);
+				venda);
 		
 		// retorno o id da venda realizada no body.
 		return ResponseEntity
