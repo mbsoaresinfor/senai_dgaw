@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import com.mbs.apigw.comunicacao.VendasServiceRoteamento;
 import com.mbs.apigw.entidades.Cliente;
 import com.mbs.apigw.entidades.Venda;
 
+@CrossOrigin(origins = "http://localhost:9005")
 @RestController
 public class VendasControllerAPI {
 
@@ -54,9 +56,9 @@ public class VendasControllerAPI {
 					.status(HttpStatus.BAD_REQUEST)
 					.body("Não foi possível realizar a venda");
 		}
-		
+		venda.setStatus("aprovado");
 		//String vendaJson = new Gson().toJson(venda);
-		
+		System.out.println("Enviando mensagem para o Brocker..");
 		rabbitTemplate.convertAndSend("vendas",
 				"routing-key-teste",
 				venda);

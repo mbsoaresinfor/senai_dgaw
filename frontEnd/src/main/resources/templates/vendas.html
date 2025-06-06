@@ -1,12 +1,139 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head> 
-    <title>Front End VENDAS</title> 
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<head>
+<title>Front End Vendas</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    
-    <!-- IMPLEMENTAR -->
-    
+
+<h1>FRONT-END vendas</h1>
+
+<h3>VENDAS</h3>
+
+
+<table>
+<tr>
+	<td> codigo cliente: </td>
+   	<td><input type="text" id="codCliente" size="20" ><br></td>
+</tr>
+<tr>
+	<td>Nome do produto: </td>
+  	<td><input type="text" id="nomeProduto" size="50"><br></td>
+</tr>
+<tr>
+  	<td>preco Produto:</td>
+   	<td><input type="text" id="precoProduto" size="20"> <br></td>
+</tr>
+<tr>	
+  	<td>quantidade: </td>
+  	<td><input type="text" id="quantidade" size="50"><br></td>
+</tr>
+<tr>
+  	<td>email: </td>
+  	<td><input type="text" id="email" size="50"><br></td>
+</tr>
+</table>  
+        
+  <button onclick="criarVenda()">Adicionar</button>
+
+   <h3>Listagem de Cliente </h3>
+  <div id="listaVendas"></div> 
+  
 </body>
+
 </html>
+
+
+<script type="text/javascript">
+
+const urlAPI = "http://localhost:9000/v1/processarVenda"; // URL da API GW
+
+// Função para criar uma nova venda
+async function criarVenda() {
+  
+	// pega os dados da tela.
+	const codCliente = document.getElementById("codCliente").value;
+	const nomeProduto = document.getElementById("nomeProduto").value;
+  	const precoProduto = document.getElementById("precoProduto").value;
+  	const quantidade = document.getElementById("quantidade").value;
+	const email = document.getElementById("email").value;
+  
+  // cria o payload para enviar a api.
+	const body = {
+		"codCliente" : codCliente,
+		"nomeProduto" : nomeProduto,
+		"precoProduto" : precoProduto,
+		"quantidade" : quantidade,
+		"email" : email
+ 	}
+  // realiza a chamada na api
+  	await fetch(urlAPI, {
+    	method: "POST",
+    	headers: {
+      	"Content-Type": "application/json"
+    	},
+    	body: JSON.stringify( body )
+  	}).then(response =>{
+		// trata o status de sucesso.		
+	  	if(response.status == 201){	  		
+			alert("Sua compra está sendo processada, aguarde o email de confirmação.");
+			document.getElementById("codCliente").value = ""; // Limpa o campo de entrada
+			document.getElementById("nomeProduto").value = "";
+			document.getElementById("precoProduto").value = "";
+			document.getElementById("quantidade").value = "";
+			document.getElementById("email").value = "";
+		}else{
+			// trata o erro na venda.
+			const data = response.text().then(d => {
+				alert("Erro no processamento da venda \n" + d);
+			});
+
+		}	  
+ 	 })
+  ;
+  
+  	//carregarClientes(); // Atualiza a lista de clientes
+}
+
+//Função para carregar os clientes 
+async function carregarClientes() {
+
+	// realiza a chamda na api
+	const response = await fetch(urlAPI);
+  	// transforma os dados da api para cliente (json-> objeto)
+	const clientes = await response.json();
+
+  	const listaClientes = document.getElementById("listaClientes");
+ 	listaClientes.innerHTML = ""; // Limpa a lista antes de adicionar as tarefas
+ 	
+ 	if(clientes == ""){
+ 		listaClientes.innerHTML = `Nenhum cliente cadastrado
+ 			<br><br>
+ 			<input type='button' onclick='carregarClientes()' value='Atualizar'/>
+ 		`;
+ 		return;
+ 	}
+  
+ 	var linhas = "<tr><th>Nome</th><th>Email</th><th>CPF</th><th>Cep</th> <th>Ação</th>";
+  	// vai iterando cada cliente.
+ 	clientes.forEach(cliente => {    
+	  linha = `
+    	<tr>
+    		<td>${cliente.nome}</td>
+    		<td>${cliente.email}</td>
+    		<td>${cliente.cpf} </td>
+    		<td>${cliente.cep}</td>
+    		<td>
+    			<button onclick="editarTarefa(${cliente.id})">Editar</button>
+      			<button onclick="excluirCliente(${cliente.id},'${cliente.nome}')">Excluir</button>
+      		</td>    
+    	`;
+	  	linhas = linhas + linha;
+  	});
+  
+  	listaClientes.innerHTML  =  '<table border=1>' + linhas + '</table><br>'  +
+  		"<input type='button' onclick='carregarClientes()' value='Atualizar'/>";  
+}
+
+
+</script>
