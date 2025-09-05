@@ -10,7 +10,8 @@ public class HelloControllerAPI {
 
 	// EXEMPLO DE UMA API REST
 	
-	@RequestMapping(value = "/hello-api", method = RequestMethod.GET)	 
+	@RequestMapping(value = "/hello-api", 
+			method = RequestMethod.GET)	 
 	public ResponseEntity<String> helloApi() throws Exception {		 
 		System.out.println("Processando hello-api");
 		 return ResponseEntity.ok("Hello API");

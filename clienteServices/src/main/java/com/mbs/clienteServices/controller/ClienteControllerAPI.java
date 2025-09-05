@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
+import org.springframework.web.bind.annotation.RestController;
 
 import com.mbs.clienteServices.entidades.Cliente;
 
-@Controller
+@RestController
 @CrossOrigin(origins = "http://localhost:9005")
 public class ClienteControllerAPI {
 
@@ -54,9 +54,25 @@ public class ClienteControllerAPI {
 		if(resultado == true) {
 			return ResponseEntity.status(HttpStatus.OK).build();
 		}
+				
 		// retorna a lista de clientes
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
+	
+	@RequestMapping(value = "/v1/cliente",method = RequestMethod.PUT)
+	public ResponseEntity<String> atualizar(@RequestBody Cliente cliente) {
+		for(Cliente c : listaCliente) {
+			if(c.getId().equals(cliente.getId())) {
+				c.setCep(cliente.getCep());
+				c.setCpf(cliente.getCpf());
+				c.setEmail(cliente.getEmail());
+				c.setNome(cliente.getNome());
+				return ResponseEntity.status(HttpStatus.OK).build();
+			}
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+	}
+	
 	
 	// SEGUIR IMPLEMENTACAO
 }
