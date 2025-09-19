@@ -3,6 +3,7 @@ package com.mbs.clienteServices.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,17 +15,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mbs.clienteServices.entidades.Cliente;
+import com.mbs.clienteServices.service.ClienteService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+// camada de entrada (API)
 @RestController
 @CrossOrigin(origins = "http://localhost:9005")
 public class ClienteControllerAPI {
 
-	private List<Cliente> listaCliente = new ArrayList<Cliente>();
-	private static Integer id = 0;
+	@Autowired
+	private ClienteService clienteService;  // injeção de dependência.
 	
 	@Operation(summary = "Salva um cliente")
 	@ApiResponses(value = 
@@ -32,18 +35,18 @@ public class ClienteControllerAPI {
 			@ApiResponse(responseCode = "400",description = "Erro na validação dos campos")})
 	@RequestMapping(value = "/v1/cliente",method = RequestMethod.POST)
 	public ResponseEntity<String> salvar(@RequestBody Cliente cliente) {
-		System.out.println("executando salvar " + cliente);
+		System.out.println("executando salvar na controler: " + cliente);
 		
-		// simples validacao de negocio
-		if(cliente.getNome() == null || ( cliente.getNome() != null && cliente.getNome().length() <=2 )){
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST). body("Nome do cliente deve ter no minimo 3 caracteres");
+		try {
+			String id = clienteService.salvar(cliente);
+			//retorna para o cliente o status ok 
+			// e o id do cliente cadastrado.
+			return ResponseEntity.ok(id);
+		} catch (Exception e) {
+			return ResponseEntity
+					.status(HttpStatus.BAD_REQUEST)
+					.body(e.getMessage());
 		}
-		// cria um id para o cliente
-		cliente.setId(++id);
-		// adiciona na lista
-		listaCliente.add(cliente);
-		//retorna para o cliente o status ok e o id do cliente cadastrado.
-		return ResponseEntity.ok(id.toString());
 	}
 	
 	@Operation(summary = "Retorna uma listagem de todos os clientes cadastrados")
@@ -51,9 +54,8 @@ public class ClienteControllerAPI {
 			{@ApiResponse(responseCode = "200",description = "Lista de clientes")})
 	@RequestMapping(value = "/v1/cliente",method = RequestMethod.GET)
 	public ResponseEntity<List<Cliente>> listar() {
-		System.out.println("executando listar " );
-		// retorna a lista de clientes
-		return ResponseEntity.ok(listaCliente);
+		List<Cliente> resultado = clienteService.listar();		
+		return ResponseEntity.ok(resultado);
 	}
 	
 	@Operation(summary = "Deletar um cliente pelo seu id")
@@ -64,7 +66,7 @@ public class ClienteControllerAPI {
 	public ResponseEntity<Void> deletar(@PathVariable Integer id) {
 		System.out.println("executando deletar de cliente id " + id );
 		// deleta o cliente pelo id, caso ele exista
-		boolean resultado = listaCliente.removeIf( (obj) ->  obj.getId().equals(id));
+		boolean resultado = clienteService.deletar(id);
 		if(resultado == true) {
 			return ResponseEntity.status(HttpStatus.OK).build();
 		}
@@ -79,16 +81,13 @@ public class ClienteControllerAPI {
 		@ApiResponse(responseCode = "400",description = "Erro na atualização do cliente")})
 	@RequestMapping(value = "/v1/cliente",method = RequestMethod.PUT)
 	public ResponseEntity<String> atualizar(@RequestBody Cliente cliente) {
-		for(Cliente c : listaCliente) {
-			if(c.getId().equals(cliente.getId())) {
-				c.setCep(cliente.getCep());
-				c.setCpf(cliente.getCpf());
-				c.setEmail(cliente.getEmail());
-				c.setNome(cliente.getNome());
-				return ResponseEntity.status(HttpStatus.OK).build();
-			}
+		
+		boolean resultado = clienteService.atualizar(cliente);
+		if(resultado == true) {
+			return ResponseEntity.status(HttpStatus.OK).build();
+		}else {		
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 	
 	@Operation(summary = "Retorna true caso cliente exista ou false se não existir no sistema")
@@ -96,12 +95,8 @@ public class ClienteControllerAPI {
 			{@ApiResponse(responseCode = "200",description = "TRUE=existir ou FALSE=não existir")})
 	@RequestMapping(value = "/v1/cliente/existe-cliente/{id}",method = RequestMethod.GET)
 	public ResponseEntity<Boolean> existeCliente(@PathVariable Integer id) { 
-		for(Cliente c : listaCliente) {
-			if(c.getId().equals(id)) {
-				return ResponseEntity.ok(Boolean.TRUE);				
-			}
-		}
-		return ResponseEntity.ok(Boolean.FALSE);		
+		boolean resultado = clienteService.existeCliente(id);
+		return ResponseEntity.ok(resultado);		
 	}
 	
 	@Operation(summary = "Retorna um cliente pelo seu ID.")
@@ -110,13 +105,12 @@ public class ClienteControllerAPI {
 	@ApiResponse(responseCode = "204",description = "Não encontrado cliente")})
 	@RequestMapping(value = "/v1/cliente/buscar-cliente/{id}",method = RequestMethod.GET)
 	public ResponseEntity<Cliente> buscarCliente(@PathVariable Integer id) { 
-		for(Cliente c : listaCliente) {
-			if(c.getId().equals(id)) {
-				return ResponseEntity.ok(c);				
-			}
+		
+		Cliente resultado = clienteService.buscarCliente(id);
+		if(resultado != null) {
+			return ResponseEntity.ok(resultado);
+		}else {		
+			return ResponseEntity.noContent().build();
 		}
-		return ResponseEntity.noContent().build();		
 	}
-
-
 }
