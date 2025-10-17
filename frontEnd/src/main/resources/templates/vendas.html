@@ -46,7 +46,7 @@
 
 <script type="text/javascript">
 
-const urlAPI = "http://localhost:9000/v1/processarVenda"; // URL da API GW
+const urlAPI = "http://localhost:9000/v1/api-gw/processar-venda"; // URL da API GW
 
 // Função para criar uma nova venda
 async function criarVenda() {
@@ -57,6 +57,11 @@ async function criarVenda() {
   	const precoProduto = document.getElementById("precoProduto").value;
   	const quantidade = document.getElementById("quantidade").value;
 	const email = document.getElementById("email").value;
+	if(codCliente == '' || nomeProduto == '' || precoProduto == ''
+		|| quantidade == '' || email == ''){
+			alert("Preencha todos os campos.");
+			return;
+		}
   
   // cria o payload para enviar a api.
 	const body = {
@@ -75,7 +80,7 @@ async function criarVenda() {
     	body: JSON.stringify( body )
   	}).then(response =>{
 		// trata o status de sucesso.		
-	  	if(response.status == 201){	  		
+	  	if(response.status == 200){	  		
 			alert("Sua compra está sendo processada, aguarde o email de confirmação.");
 			document.getElementById("codCliente").value = ""; // Limpa o campo de entrada
 			document.getElementById("nomeProduto").value = "";
