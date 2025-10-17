@@ -30,6 +30,9 @@ public class VendasService {
 			venda.getNomeProduto().equals("")){
 			throw new Exception("nome produto invalido");
 		}
+		if(venda.getNomeProduto().length() < 3) {
+			throw new Exception("nome produto tem que ter no minimo 3 caracteres");
+		}
 		
 		if(venda.getQuantidade() == null )	{
 			throw new Exception("quantidadevenda invalido");

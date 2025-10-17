@@ -45,9 +45,10 @@ public class VendasControllerAPI {
 			Integer id = vendasService.salvar(venda);
 			return ResponseEntity.ok(id.toString());
 		}catch (Exception e) {
-			return ResponseEntity
+			ResponseEntity retorno = ResponseEntity
 					.status(HttpStatus.BAD_REQUEST)
 					.body(e.getMessage());
+			 return retorno;
 		}
 	}
 	

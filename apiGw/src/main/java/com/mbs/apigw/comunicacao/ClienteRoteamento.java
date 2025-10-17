@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.mbs.apigw.configuration.RetreiveMessageErrorDecoder;
+
 // url= endereço ip do servidor cliente que quero fazer o roteamento.
-@FeignClient(value = "ClienteRoteamento", url = "http://localhost:9003/")
+@FeignClient(value = "ClienteRoteamento", url = "http://localhost:9003/",
+configuration = {RetreiveMessageErrorDecoder.class})
 public interface ClienteRoteamento {
 
 	@RequestMapping(value = "/v1/cliente/existe-cliente/{id}",method =
