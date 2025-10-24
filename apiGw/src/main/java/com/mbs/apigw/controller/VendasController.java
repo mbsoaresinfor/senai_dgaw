@@ -1,5 +1,8 @@
 package com.mbs.apigw.controller;
 
+import java.util.EventObject;
+
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.mbs.apigw.comunicacao.ClienteRoteamento;
 import com.mbs.apigw.comunicacao.VendasRoteamento;
+import com.mbs.apigw.entidades.Cliente;
+import com.mbs.apigw.entidades.EventoEmail;
 import com.mbs.apigw.entidades.Venda;
 
 
@@ -24,6 +29,9 @@ public class VendasController {
 	
 	@Autowired
 	private ClienteRoteamento clienteRoteamento;
+	
+	@Autowired
+	private RabbitTemplate rabbitTemplate;
 	
 	@RequestMapping(value = "/v1/api-gw/venda",method = RequestMethod.POST)
 	public ResponseEntity<String> salvar(@RequestBody Venda venda) {
@@ -58,8 +66,21 @@ public class VendasController {
 			// abortando o processamento da venda.
 		}
 		System.out.println("salvar venda realizada com sucesso");
-		// TODO Ajustar para a chamada correta do brocker. 
-		System.out.println("MOCKANDO ENVIO DE MENSAGEM");
+		
+		String idcompra = salvarVenda.getBody();
+		Cliente cliente = clienteRoteamento.buscarCliente(venda.getCodCliente()).getBody();		
+		EventoEmail evento = new EventoEmail();
+		evento.setVenda(venda);
+		evento.setCliente(cliente);
+		evento.setTituloEmail("Sucesso na compra do produto: " + venda.getNomeProduto());
+		evento.setTextoEmail("Parabéns, sua compra foi aprovada, e está sendo enviada\n"
+				+ "O n. do pedido da compra é: " +idcompra);
+		
+		System.out.println("enviando evento para o brocker");
+		rabbitTemplate.convertAndSend("vendas",
+				"routing-vendas",
+				evento);
+		
 		return ResponseEntity
 				.status(HttpStatus.OK)
 				.body("sucesso");
